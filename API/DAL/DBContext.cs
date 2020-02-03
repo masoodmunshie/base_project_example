@@ -23,8 +23,8 @@ namespace DAL
 
         public string ReturnConnectionString()
         {
-      
-        }
+            return Database.GetDbConnection().ConnectionString;
+       }
 
         public NpgsqlConnection ReturnSQLConn()
         {

@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Interfaces;
 
 namespace ApiLayer.StartupExtensions
 {
@@ -34,8 +35,8 @@ namespace ApiLayer.StartupExtensions
 
         public static void InterfaceServices(this IServiceCollection services)
         {
-            services.AddTransient<DAL.Interfaces.Iuser, DAL.Service.user_service>();
-            services.AddTransient<DAL.Interfaces.Iauth, DAL.Service.auth_service>();
+            services.AddTransient<Iuser, DAL.Service.user_service>();
+            services.AddTransient<Iauth, DAL.Service.auth_service>();
         }
 
         public static void JWTAuthorization(this IServiceCollection services)

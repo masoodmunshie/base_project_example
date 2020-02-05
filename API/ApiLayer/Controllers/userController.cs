@@ -12,7 +12,8 @@ namespace ApiLayer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize, Authorize(Policy = "roles")]
+
     public class userController : ControllerBase
     {
 

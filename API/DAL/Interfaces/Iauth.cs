@@ -10,5 +10,7 @@ namespace DAL.Interfaces
     {
       Task<auth_response> Login(auth Auth);
 
+     Task<List<right>> GetRights(int userid);
+
     }
 }

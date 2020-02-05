@@ -20,6 +20,12 @@ namespace DAL
         }
 
         public DbSet<user> users { get; set; }
+        public DbSet <role>  roles { get; set; }
+        
+        public DbSet<role_rights> role_rights { get; set; }
+        public DbSet<right> rights { get; set; }
+
+
 
         public string ReturnConnectionString()
         {

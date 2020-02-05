@@ -46,6 +46,24 @@ namespace DAL.Service
             return tokenString;
         }
 
+        //get the rights from the database
+
+        public async Task<List<right>> GetRights(int userid)
+        {
+            List<right> response = new List<right>();
+
+            var q = from u in _context.users
+                    join r in _context.roles on u.role_id equals r.id
+                    join rr in _context.role_rights on r.id equals rr.role_id
+                    join ri in _context.rights on rr.right_id equals ri.id
+                    where u.id == userid
+                    select new right { id = ri.id, name = ri.name, api = ri.api };
+
+            response = await q.ToListAsync();
+
+            return response;
+        }
+
         public async Task<auth_response> Login(auth Auth)
         {
             auth_response ar = new auth_response();

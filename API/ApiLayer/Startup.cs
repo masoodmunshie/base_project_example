@@ -41,18 +41,10 @@ namespace ApiLayer
             services.AddDbContext<DBContext>(options =>options.UseNpgsql(Configuration.GetConnectionString("sqlConnection")));
             services.InterfaceServices();
             services.JWTAuthorization();
+            services.EnforceRolesPolicy(); // This is where i add in the roles 
 
 
-            var sp = services.BuildServiceProvider();
-            var authService = sp.GetService<Iauth>();
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("roles", policy =>
-                    policy.Requirements.Add(new auth_handler_requirement(21, authService)));
-            });
-
-            
-            services.AddSingleton<IAuthorizationHandler, RolesHandler>();
+          
 
            
             

@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interfaces;
+using DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ApiLayer.StartupExtensions
 {
@@ -38,6 +40,20 @@ namespace ApiLayer.StartupExtensions
             services.AddTransient<Iuser, DAL.Service.user_service>();
             services.AddTransient<Iauth, DAL.Service.auth_service>();
         }
+
+        public static void EnforceRolesPolicy(this IServiceCollection services)
+        {
+            var sp = services.BuildServiceProvider();
+            var authService = sp.GetService<Iauth>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("roles", policy =>
+                    policy.Requirements.Add(new auth_handler_requirement(21, authService)));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, RolesHandler>();
+        }
+
 
         public static void JWTAuthorization(this IServiceCollection services)
         {

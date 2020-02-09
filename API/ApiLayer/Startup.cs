@@ -41,17 +41,7 @@ namespace ApiLayer
             services.AddDbContext<DBContext>(options =>options.UseNpgsql(Configuration.GetConnectionString("sqlConnection")));
             services.InterfaceServices();
             services.JWTAuthorization();
-            services.EnforceRolesPolicy(); // This is where i add in the roles 
-
-
-          
-
-           
-            
-
-
-
-
+            services.EnforceRolesPolicy(); // This is where i add in the roles
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

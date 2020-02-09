@@ -26,16 +26,23 @@ namespace ApiLayer.Controllers
 
         [Route("get")]
         [HttpGet]
-        public Task<user_response> GetUsers(request request)
+        public async  Task<user_response> GetUsers(request request)
         {
-            return _iuser.GetUsers(request);
+            return await _iuser.GetUsers(request);
         }
 
         [Route("user")]
         [HttpPost]
-        public Task<user_response_add> AddUpdateUser(user user)
+        public async Task<user_response_add> AddUpdateUser(user user)
         {
-            return _iuser.AddUser(user);
+            return await _iuser.AddUser(user);
+        }
+
+        [Route("roles")]
+        [HttpGet]
+        public async Task<role_list> GetRoles(request req)
+        {
+            return await _iuser.GetRoles(req);
         }
 
       

@@ -14,7 +14,7 @@ namespace DAL.Interfaces
 
         Task<user_response_add> AddUser(user u);
 
-      
+        Task<role_list> GetRoles(request req);
 
 
 

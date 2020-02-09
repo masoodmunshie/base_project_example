@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using DAL.Models;
 using System.Data.SqlClient;
 using Npgsql;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Service
 {
@@ -88,6 +89,34 @@ namespace DAL.Service
 
             return response;
            
+        }
+
+        public async Task<role_list> GetRoles(request req)
+        {
+            if (req.search_text == null)
+                req.search_text = "";
+
+            var query = from r in _context.roles
+                        .Skip(req.page_size * (req.page_no - 1))
+                        .Take(req.page_size)
+                        .Where(x=> x.name.Contains(req.search_text))
+                        select new role_item
+                        {
+                            role = new role { id = r.id, name = r.name },
+                            rights = 
+                            (from rr in _context.role_rights
+                                      join ri in _context.rights on rr.right_id equals ri.id
+                                      where rr.role_id == r.id
+                                      select new right { id = ri.id, name = ri.name, description = ri.description }).ToList()
+
+                        };
+
+            role_list response = new role_list();
+            response.roles = await query.ToListAsync();
+            response.roles_count = await _context.roles.Where(x => x.name.Contains(req.search_text)).CountAsync();
+
+            return response;
+
         }
 
 
